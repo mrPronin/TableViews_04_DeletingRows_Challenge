@@ -16,7 +16,8 @@ class ScaryBugsTableViewController: UITableViewController {
     // MARK: - UITableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        navigationItem.rightBarButtonItem = editButtonItem()
         setupBugs()
     }
 
@@ -54,6 +55,15 @@ class ScaryBugsTableViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if editingStyle == .Delete {
+            let bugSection = bugSections[indexPath.section]
+            bugSection.bugs.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+    
     // MARK: - Private
     
     private func setupBugs() {
